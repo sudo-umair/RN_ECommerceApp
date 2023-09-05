@@ -46,6 +46,13 @@ const styles = StyleSheet.create({
     elevation: 5,
     minHeight: 40,
     minWidth: 100,
+    shadowColor: Colors.Black,
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
   },
   pressed: {
     backgroundColor: Colors.ButtonPrimaryBackgroundPressed,
