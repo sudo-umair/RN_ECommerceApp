@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.Large,
     color: Colors.PrimaryText,
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 80,
   },
 });

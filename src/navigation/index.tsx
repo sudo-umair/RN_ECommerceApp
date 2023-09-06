@@ -7,6 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 // Screens
 import HomeScreen from 'screens/home';
 import ProductsScreen from 'screens/products';
+import DescriptionScreen from 'screens/description';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -19,6 +20,10 @@ const AppNavigation = () => {
         }}>
         <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
         <Stack.Screen name={SCREENS.PRODUCTS} component={ProductsScreen} />
+        <Stack.Screen
+          name={SCREENS.DESCRIPTION}
+          component={DescriptionScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

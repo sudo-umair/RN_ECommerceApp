@@ -11,3 +11,8 @@ export type ProductScreenProps = NativeStackScreenProps<
   RootStackParamList,
   SCREENS.PRODUCTS
 >;
+
+export type DescriptionScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  SCREENS.DESCRIPTION
+>;

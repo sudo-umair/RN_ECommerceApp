@@ -2,10 +2,20 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {ProductBoxProps} from 'interfaces/components';
 import {Colors, FontSizes} from 'common/styles';
+import {useNavigation} from '@react-navigation/native';
+import {ProductScreenProps} from 'interfaces/screens';
+import {SCREENS} from 'common/constants';
+
+type Navigation = ProductScreenProps['navigation'];
 
 const ProductBox: React.FC<ProductBoxProps> = ({product}) => {
+  const navigation = useNavigation<Navigation>();
+
+  const goToDescriptionScreen = () => {
+    navigation.navigate(SCREENS.DESCRIPTION, {product});
+  };
   return (
-    <Pressable style={styles.container}>
+    <Pressable onPress={goToDescriptionScreen} style={styles.container}>
       <Image
         source={{
           uri: product.thumbnail,
