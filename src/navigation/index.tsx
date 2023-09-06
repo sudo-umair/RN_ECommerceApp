@@ -6,14 +6,19 @@ import {NavigationContainer} from '@react-navigation/native';
 
 // Screens
 import HomeScreen from 'screens/home';
+import ProductsScreen from 'screens/products';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerTitleAlign: 'center',
+        }}>
         <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
+        <Stack.Screen name={SCREENS.PRODUCTS} component={ProductsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

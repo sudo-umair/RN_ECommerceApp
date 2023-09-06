@@ -1,16 +1,11 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {HomeScreenProps} from 'interfaces/screens';
 import {ICategories} from 'interfaces/common';
 import {fetchCategories} from 'api/index';
 import CategoryRow from 'components/category-row';
-import {Colors, FontSizes} from 'common/styles';
-
-const ListEmptyText = (state: boolean) => (
-  <Text style={styles.info}>
-    {state ? 'Loading...' : 'No categories found'}
-  </Text>
-);
+import {Colors} from 'common/styles';
+import ListEmpty from 'components/ui/list-empty';
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,7 +41,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         renderItem={({item}) => <CategoryRow title={item} />}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={styles.list}
-        ListEmptyComponent={ListEmptyText(loading)}
+        ListEmptyComponent={<ListEmpty state={loading} />}
       />
     </View>
   );
@@ -62,11 +57,5 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: 10,
-  },
-  info: {
-    fontSize: FontSizes.Large,
-    color: Colors.PrimaryText,
-    textAlign: 'center',
-    marginTop: 20,
   },
 });

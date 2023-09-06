@@ -1,4 +1,5 @@
 import type {PressableProps, TextStyle, ViewStyle} from 'react-native';
+import {IProduct} from './common';
 
 export interface ButtonProps {
   title: string;
@@ -14,4 +15,8 @@ export interface ButtonProps {
 
 export interface CategoryRowProps {
   title: string;
+}
+
+export interface ProductBoxProps {
+  product: IProduct;
 }

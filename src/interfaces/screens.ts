@@ -6,3 +6,8 @@ export type HomeScreenProps = NativeStackScreenProps<
   RootStackParamList,
   SCREENS.HOME
 >;
+
+export type ProductScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  SCREENS.PRODUCTS
+>;
