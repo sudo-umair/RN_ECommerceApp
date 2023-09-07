@@ -13,6 +13,8 @@ const Button = ({
   rippleConfig,
   disabledStyle,
   pressedStyle,
+  icon,
+  onlyIcon,
 }: ButtonProps) => {
   return (
     <Pressable
@@ -25,13 +27,17 @@ const Button = ({
       }
       style={({pressed}) => [
         styles.container,
+        icon && styles.containerWithIcon,
         style,
         disabled && [styles.disabled && disabledStyle],
         Platform.OS === 'ios' &&
           dynamic &&
           pressed && [styles.pressed, pressedStyle],
       ]}>
-      <Text style={[styles.buttonText, textStyle]}>{title ?? 'Button'}</Text>
+      {onlyIcon || (
+        <Text style={[styles.buttonText, textStyle]}>{title ?? 'Button'}</Text>
+      )}
+      {icon && icon}
     </Pressable>
   );
 };
@@ -53,6 +59,11 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+  },
+  containerWithIcon: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   pressed: {
     backgroundColor: Colors.ButtonPrimaryBackgroundPressed,

@@ -6,5 +6,6 @@ export interface ICartItem extends IProduct {
 
 export interface ICartState {
   items: ICartItem[];
-  total: number;
+  totalProducts: number;
+  totalPrice: number;
 }

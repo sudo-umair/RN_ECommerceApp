@@ -7,19 +7,34 @@ import CategoryRow from 'components/category-row';
 import {Colors} from 'common/styles';
 import ListEmpty from 'components/ui/list-empty';
 import {useToast} from 'react-native-toast-notifications';
+import IconButton from 'components/ui/icon-button';
+import {ShoppingCart} from 'react-native-feather';
+import {SCREENS} from 'common/constants';
+import {useAppSelector} from 'store/redux';
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<ICategories>([]);
   const [trigger, setTrigger] = useState<boolean>(false);
 
+  const {totalProducts} = useAppSelector(state => state.cart);
+
   const toast = useToast();
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: 'Categories',
+      // eslint-disable-next-line react/no-unstable-nested-components
+      headerRight: () => (
+        <IconButton
+          counter={totalProducts}
+          rippleConfig={{color: Colors.SecondaryAccent}}
+          icon={<ShoppingCart color={Colors.PrimaryText} />}
+          onPress={() => navigation.navigate(SCREENS.CART)}
+        />
+      ),
     });
-  }, [navigation]);
+  }, [navigation, totalProducts]);
 
   useEffect(() => {
     (async function () {

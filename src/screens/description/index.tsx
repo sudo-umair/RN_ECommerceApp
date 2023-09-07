@@ -4,9 +4,12 @@ import {DescriptionScreenProps} from 'interfaces/screens';
 import {capitalize, ratingFormatter} from 'helpers/text-formatters';
 import {Colors, FontSizes} from 'common/styles';
 import Button from 'components/ui/button';
-import {useAppDispatch} from 'store/redux';
+import {useAppDispatch, useAppSelector} from 'store/redux';
 import {addToCart} from 'store/cart.slice';
 import {useToast} from 'react-native-toast-notifications';
+import {ShoppingCart} from 'react-native-feather';
+import IconButton from 'components/ui/icon-button';
+import {SCREENS} from 'common/constants';
 
 const DescriptionScreen: React.FC<DescriptionScreenProps> = ({
   navigation,
@@ -14,20 +17,32 @@ const DescriptionScreen: React.FC<DescriptionScreenProps> = ({
 }) => {
   const product = route.params.product;
 
+  const {totalProducts} = useAppSelector(state => state.cart);
+
   const toast = useToast();
   const dispatch = useAppDispatch();
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: capitalize(product.title),
+      // eslint-disable-next-line react/no-unstable-nested-components
+      headerRight: () => (
+        <IconButton
+          counter={totalProducts}
+          rippleConfig={{color: Colors.PrimaryAccent}}
+          icon={<ShoppingCart color={Colors.PrimaryText} />}
+          onPress={() => navigation.navigate(SCREENS.CART)}
+        />
+      ),
     });
-  }, [navigation, product]);
+  }, [navigation, product, totalProducts]);
 
   const handleAddToCart = () => {
     dispatch(addToCart({...product, quantity: 1}));
     toast.show('Added to cart', {
       type: 'success',
     });
+    navigation.goBack();
   };
 
   return (
@@ -56,9 +71,12 @@ const DescriptionScreen: React.FC<DescriptionScreenProps> = ({
         <Text style={styles.label}>Rating</Text>
         <Text style={styles.value}>{ratingFormatter(product.rating)}</Text>
       </View>
-      <View style={styles.buttonRow}>
-        <Button title="Add to Cart" onPress={handleAddToCart} />
-      </View>
+      <Button
+        icon={<ShoppingCart stroke={Colors.White} width={20} height={20} />}
+        title="Add to Cart"
+        onPress={handleAddToCart}
+        style={styles.button}
+      />
     </View>
   );
 };
@@ -97,10 +115,16 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.Large,
     textAlign: 'center',
   },
-  buttonRow: {
+  button: {
     position: 'absolute',
     bottom: 10,
     left: 10,
     right: 10,
+    paddingHorizontal: 20,
+  },
+  cartButton: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
   },
 });

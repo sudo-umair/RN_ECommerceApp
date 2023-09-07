@@ -9,4 +9,5 @@ export type RootStackParamList = {
   [SCREENS.DESCRIPTION]: {
     product: IProduct;
   };
+  [SCREENS.CART]: undefined;
 };

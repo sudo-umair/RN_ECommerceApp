@@ -8,6 +8,10 @@ import ListEmpty from 'components/ui/list-empty';
 import ProductBox from 'components/product-box';
 import {Colors} from 'common/styles';
 import {useToast} from 'react-native-toast-notifications';
+import IconButton from 'components/ui/icon-button';
+import {ShoppingCart} from 'react-native-feather';
+import {SCREENS} from 'common/constants';
+import {useAppSelector} from 'store/redux';
 
 const ProductsScreen: React.FC<ProductScreenProps> = ({navigation, route}) => {
   const category = route.params.category;
@@ -16,13 +20,23 @@ const ProductsScreen: React.FC<ProductScreenProps> = ({navigation, route}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [trigger, setTrigger] = useState<boolean>(false);
 
+  const {totalProducts} = useAppSelector(state => state.cart);
   const toast = useToast();
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: categoryFormatter(category),
+      // eslint-disable-next-line react/no-unstable-nested-components
+      headerRight: () => (
+        <IconButton
+          counter={totalProducts}
+          rippleConfig={{color: Colors.NeutralBackground}}
+          icon={<ShoppingCart color={Colors.PrimaryText} />}
+          onPress={() => navigation.navigate(SCREENS.CART)}
+        />
+      ),
     });
-  }, [navigation, category]);
+  }, [navigation, category, totalProducts]);
 
   useEffect(() => {
     (async function () {

@@ -6,9 +6,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 const ListEmpty: React.FC<{
   state: boolean;
 }> = ({state}) => (
-  <Text style={styles.info}>
-    {state ? 'Loading...' : 'No categories found'}
-  </Text>
+  <Text style={styles.info}>{state ? 'Loading...' : 'No data found'}</Text>
 );
 
 export default ListEmpty;

@@ -8,6 +8,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from 'screens/home';
 import ProductsScreen from 'screens/products';
 import DescriptionScreen from 'screens/description';
+import CartScreen from 'screens/cart';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -24,6 +25,7 @@ const AppNavigation = () => {
           name={SCREENS.DESCRIPTION}
           component={DescriptionScreen}
         />
+        <Stack.Screen name={SCREENS.CART} component={CartScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

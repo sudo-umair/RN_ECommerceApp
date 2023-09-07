@@ -4,7 +4,8 @@ import {ICartState, ICartItem} from 'interfaces/store';
 
 const initialState: ICartState = {
   items: [],
-  total: 0,
+  totalPrice: 0,
+  totalProducts: 0,
 };
 
 export const cartSlice = createSlice({
@@ -12,37 +13,46 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<ICartItem>) => {
-      const item = state.items.find(item => item.id === action.payload.id);
+      const product = action.payload;
+      const item = state.items.find(item => item.id === product.id);
       if (item) {
         item.quantity++;
       } else {
-        state.items.push({...action.payload, quantity: 1});
+        state.items.push({...product, quantity: 1});
       }
-      state.total++;
+      state.totalProducts++;
+      state.totalPrice += product.price;
     },
     removeFromCart: (state, action: PayloadAction<ICartItem>) => {
-      const item = state.items.find(item => item.id === action.payload.id);
+      const product = action.payload;
+      const item = state.items.find(item => item.id === product.id);
       if (item) {
         item.quantity--;
-        state.total--;
+        state.totalProducts--;
+        state.totalPrice -= product.price;
       }
     },
     clearCart: state => {
       state.items = [];
-      state.total = 0;
+      state.totalPrice = 0;
+      state.totalProducts = 0;
     },
     increaseQuantity: (state, action: PayloadAction<ICartItem>) => {
-      const item = state.items.find(item => item.id === action.payload.id);
+      const product = action.payload;
+      const item = state.items.find(item => item.id === product.id);
       if (item) {
         item.quantity++;
-        state.total++;
+        state.totalPrice += product.price;
+        state.totalProducts++;
       }
     },
     decreaseQuantity: (state, action: PayloadAction<ICartItem>) => {
-      const item = state.items.find(item => item.id === action.payload.id);
+      const product = action.payload;
+      const item = state.items.find(item => item.id === product.id);
       if (item) {
         item.quantity--;
-        state.total--;
+        state.totalPrice -= product.price;
+        state.totalProducts--;
       }
     },
   },
