@@ -3,12 +3,13 @@ import React from 'react';
 import {CartItemProps} from 'interfaces/components';
 import {Colors, FontSizes} from 'common/styles';
 import IconButton from 'components/ui/icon-button';
-import {PlusCircle, MinusCircle} from 'react-native-feather';
+import {PlusCircle, MinusCircle, Trash2} from 'react-native-feather';
 
 const CartItem: React.FC<CartItemProps> = ({
   product,
   onDecrease,
   onIncrease,
+  onDelete,
 }) => {
   return (
     <Pressable style={styles.container}>
@@ -24,15 +25,31 @@ const CartItem: React.FC<CartItemProps> = ({
         </View>
         <View style={styles.details}>
           <IconButton
-            icon={<MinusCircle height={30} width={30} color={Colors.Error} />}
+            rippleConfig={{color: Colors.SecondaryAccent}}
+            icon={
+              <MinusCircle
+                height={30}
+                width={30}
+                color={Colors.SecondaryAccent}
+              />
+            }
             onPress={() => onDecrease()}
-            style={styles.iconButton}
           />
           <Text style={styles.quantity}>{product.quantity}</Text>
           <IconButton
-            icon={<PlusCircle height={30} width={30} color={Colors.Error} />}
+            rippleConfig={{color: Colors.SecondaryAccent}}
+            icon={
+              <PlusCircle
+                height={30}
+                width={30}
+                color={Colors.SecondaryAccent}
+              />
+            }
             onPress={() => onIncrease()}
-            style={styles.iconButton}
+          />
+          <IconButton
+            icon={<Trash2 height={30} width={30} color={Colors.Danger} />}
+            onPress={() => onDelete()}
           />
         </View>
       </View>
@@ -68,7 +85,7 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     height: '100%',
-    width: '25%',
+    width: 100,
   },
   details: {
     width: '100%',
@@ -85,12 +102,11 @@ const styles = StyleSheet.create({
   price: {
     fontSize: FontSizes.Medium,
     fontWeight: 'bold',
-    color: Colors.Error,
+    color: Colors.SecondaryAccent,
   },
-  iconButton: {},
   quantity: {
-    fontSize: FontSizes.ExtraLarge,
+    fontSize: FontSizes.SubHeading,
     fontWeight: 'bold',
-    color: Colors.PrimaryAccent,
+    color: Colors.Black,
   },
 });

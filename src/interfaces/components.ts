@@ -29,6 +29,7 @@ export interface CartItemProps {
   product: ICartItem;
   onIncrease: () => void;
   onDecrease: () => void;
+  onDelete: () => void;
 }
 
 export interface CategoryRowProps {

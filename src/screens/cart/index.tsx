@@ -6,7 +6,12 @@ import {useAppDispatch, useAppSelector} from 'store/redux';
 import CartItem from 'components/cart-item';
 import ListEmpty from 'components/ui/list-empty';
 import {ICartItem} from 'interfaces/store';
-import {clearCart, decreaseQuantity, increaseQuantity} from 'store/cart.slice';
+import {
+  clearCart,
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from 'store/cart.slice';
 import Button from 'components/ui/button';
 import {useToast} from 'react-native-toast-notifications';
 import {SCREENS} from 'common/constants';
@@ -30,6 +35,24 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation}) => {
 
   const handleDecrease = (product: ICartItem) => {
     dispatch(decreaseQuantity(product));
+  };
+
+  const handleDelete = (product: ICartItem) => {
+    Alert.alert('Delete', 'Are you sure you want to delete this item?', [
+      {
+        text: 'Cancel',
+        onPress: () => {},
+      },
+      {
+        text: 'Yes',
+        onPress: () => {
+          dispatch(removeFromCart(product));
+          toast.show('Item deleted!', {
+            type: 'success',
+          });
+        },
+      },
+    ]);
   };
 
   const handleCheckout = () => {
@@ -61,6 +84,7 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation}) => {
           <CartItem
             onDecrease={() => handleDecrease(item)}
             onIncrease={() => handleIncrease(item)}
+            onDelete={() => handleDelete(item)}
             product={item}
           />
         )}

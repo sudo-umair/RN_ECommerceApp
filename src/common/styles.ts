@@ -7,6 +7,7 @@ export enum Colors {
   SecondaryText = '#888888',
 
   Success = '#4CAF50',
+  Danger = '#dc2323',
   Error = '#FF5252',
   Info = '#3498DB',
   Warning = '#FFD740',
