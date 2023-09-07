@@ -6,11 +6,14 @@ import {fetchCategories} from 'api/index';
 import CategoryRow from 'components/category-row';
 import {Colors} from 'common/styles';
 import ListEmpty from 'components/ui/list-empty';
+import {useToast} from 'react-native-toast-notifications';
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<ICategories>([]);
   const [trigger, setTrigger] = useState<boolean>(false);
+
+  const toast = useToast();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,11 +29,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         setCategories(response.data);
       } catch (error) {
         console.log(error);
+        toast.show('Something went wrong', {
+          type: 'danger',
+        });
       } finally {
         setLoading(false);
       }
     })();
-  }, [trigger]);
+  }, [toast, trigger]);
 
   return (
     <View style={styles.root}>

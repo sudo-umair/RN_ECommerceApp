@@ -4,6 +4,9 @@ import {DescriptionScreenProps} from 'interfaces/screens';
 import {capitalize, ratingFormatter} from 'helpers/text-formatters';
 import {Colors, FontSizes} from 'common/styles';
 import Button from 'components/ui/button';
+import {useAppDispatch} from 'store/redux';
+import {addToCart} from 'store/cart.slice';
+import {useToast} from 'react-native-toast-notifications';
 
 const DescriptionScreen: React.FC<DescriptionScreenProps> = ({
   navigation,
@@ -11,11 +14,21 @@ const DescriptionScreen: React.FC<DescriptionScreenProps> = ({
 }) => {
   const product = route.params.product;
 
+  const toast = useToast();
+  const dispatch = useAppDispatch();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: capitalize(product.title),
     });
   }, [navigation, product]);
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({...product, quantity: 1}));
+    toast.show('Added to cart', {
+      type: 'success',
+    });
+  };
 
   return (
     <View style={styles.root}>
@@ -44,7 +57,7 @@ const DescriptionScreen: React.FC<DescriptionScreenProps> = ({
         <Text style={styles.value}>{ratingFormatter(product.rating)}</Text>
       </View>
       <View style={styles.buttonRow}>
-        <Button title="Add to Cart" onPress={() => {}} />
+        <Button title="Add to Cart" onPress={handleAddToCart} />
       </View>
     </View>
   );

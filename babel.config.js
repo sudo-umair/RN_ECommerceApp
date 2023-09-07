@@ -13,6 +13,8 @@ module.exports = {
           interfaces: './src/interfaces',
           navigation: './src/navigation',
           screens: './src/screens',
+          store: './src/store',
+          '@': './src',
         },
       },
     ],

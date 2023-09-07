@@ -7,6 +7,7 @@ import {fetchProductsForCategory} from 'api/index';
 import ListEmpty from 'components/ui/list-empty';
 import ProductBox from 'components/product-box';
 import {Colors} from 'common/styles';
+import {useToast} from 'react-native-toast-notifications';
 
 const ProductsScreen: React.FC<ProductScreenProps> = ({navigation, route}) => {
   const category = route.params.category;
@@ -14,6 +15,8 @@ const ProductsScreen: React.FC<ProductScreenProps> = ({navigation, route}) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [trigger, setTrigger] = useState<boolean>(false);
+
+  const toast = useToast();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -32,11 +35,14 @@ const ProductsScreen: React.FC<ProductScreenProps> = ({navigation, route}) => {
         }
       } catch (error) {
         console.log(error);
+        toast.show('Something went wrong', {
+          type: 'danger',
+        });
       } finally {
         setLoading(false);
       }
     })();
-  }, [category, trigger]);
+  }, [category, toast, trigger]);
 
   return (
     <View style={styles.root}>
