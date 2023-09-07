@@ -3,15 +3,18 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ToastProvider} from 'react-native-toast-notifications';
 import {Provider} from 'react-redux';
-import {store} from 'store/redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistor, store} from 'store/redux';
 
 function App(): JSX.Element {
   return (
     <View style={styles.root}>
       <Provider store={store}>
-        <ToastProvider>
-          <AppNavigation />
-        </ToastProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <ToastProvider>
+            <AppNavigation />
+          </ToastProvider>
+        </PersistGate>
       </Provider>
     </View>
   );
