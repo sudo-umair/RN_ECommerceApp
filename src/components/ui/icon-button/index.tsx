@@ -16,6 +16,7 @@ const IconButton: React.FC<IconButtonProps> = ({
     <>
       <View style={[styles.root, style]}>
         <Button
+          dynamic={false}
           onPress={onPress}
           rippleConfig={rippleConfig}
           disabled={disabled}
