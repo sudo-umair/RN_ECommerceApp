@@ -11,7 +11,7 @@ function App(): JSX.Element {
     <View style={styles.root}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ToastProvider>
+          <ToastProvider duration={1000}>
             <AppNavigation />
           </ToastProvider>
         </PersistGate>
