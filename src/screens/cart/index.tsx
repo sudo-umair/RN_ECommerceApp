@@ -55,7 +55,19 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation}) => {
     ]);
   };
 
+  const checkIfCartIsEmpty = (): boolean => {
+    if (items.length === 0) {
+      toast.show('Cart is empty!', {
+        type: 'danger',
+      });
+      return true;
+    }
+    return false;
+  };
+
   const handleCheckout = () => {
+    if (checkIfCartIsEmpty()) return;
+
     Alert.alert('Checkout', 'Are you sure you want to checkout?', [
       {
         text: 'Cancel',
@@ -74,7 +86,13 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation}) => {
     ]);
   };
 
-  const handleEmptyCart = () => dispatch(clearCart());
+  const handleEmptyCart = () => {
+    if (checkIfCartIsEmpty()) return;
+    dispatch(clearCart());
+    toast.show('Cart emptied!', {
+      type: 'success',
+    });
+  };
 
   return (
     <View style={styles.root}>
